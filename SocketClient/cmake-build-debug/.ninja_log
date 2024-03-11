@@ -1,0 +1,6 @@
+# ninja log v5
+0	96	1710179766569348008	CMakeFiles/SocketClient.dir/main.c.o	61475e5f9bf6233d
+97	198	1710179766669693367	SocketClient	709ab8497b297b62
+0	69	1710181645829074830	CMakeFiles/SocketClient.dir/main.c.o	fb25290a8b1671b6
+1	157	1710181943993966497	CMakeFiles/SocketClient.dir/main.c.o	fb25290a8b1671b6
+158	258	1710181944094751525	SocketClient	d1ce79daf3195f34

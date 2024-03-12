@@ -2,6 +2,15 @@
 #include <unistd.h>
 #include "socketutil.h"
 
+struct AcceptedSocket {
+    int acceptedSocketFD;
+    struct sockaddr_in address;
+    int error;
+    bool acceptedSuccessfully;
+};
+
+struct AcceptedSocket * acceptIncomingConnection(int serverSockerFD);
+
 int main() {
 
     int serverSockerFD = createTCPIpv4Socket();
@@ -17,13 +26,11 @@ int main() {
     int listenResult = listen(serverSockerFD, 10);
 
 
-    struct sockaddr_in clientAddress;
-    int clientAddressSize = sizeof (struct sockaddr_in);
-    int clientSocketFD = accept(serverSockerFD, &clientAddress, &clientAddressSize);
+    struct AcceptedSocket* clientSocket = acceptIncomingConnection(serverSockerFD);
 
     char buffer[1024];
     while (true) {
-        ssize_t ammountReceived = recv(clientSocketFD, buffer, 1024, 0);
+        ssize_t ammountReceived = recv(clientSocket->acceptedSocketFD, buffer, 1024, 0);
 
         if (ammountReceived > 0) {
             buffer[ammountReceived] = 0;
@@ -34,8 +41,25 @@ int main() {
             break;
     }
 
-    close(clientSocketFD);
+    close(clientSocket->acceptedSocketFD);
     shutdown(serverSockerFD, SHUT_RDWR);
 
     return 0;
+}
+
+struct AcceptedSocket * acceptIncomingConnection(int serverSockerFD) {
+    struct sockaddr_in clientAddress;
+    int clientAddressSize = sizeof (struct sockaddr_in);
+    int clientSocketFD = accept(serverSockerFD, &clientAddress, &clientAddressSize);
+
+    struct AcceptedSocket* acceptedSocket = malloc(sizeof (struct AcceptedSocket));
+    acceptedSocket->address = clientAddress;
+    acceptedSocket->acceptedSocketFD = clientSocketFD;
+    acceptedSocket->acceptedSuccessfully = clientSocketFD > 0;
+
+    if (!acceptedSocket->acceptedSuccessfully) {
+        acceptedSocket->error = clientSocketFD;
+    }
+
+    return acceptedSocket;
 }

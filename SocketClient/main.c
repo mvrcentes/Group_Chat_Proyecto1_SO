@@ -1,23 +1,33 @@
+#include <stdbool.h>
+#include <unistd.h>
 #include "socketutil.h"
 
 int main() {
     int socketFD = createTCPIpv4Socket(); //file descriptor
-    struct sockaddr_in *address = createIPv4Address("142.250.188.46", 80);
+    struct sockaddr_in *address = createIPv4Address("127.0.0.1", 2000);
 
     int result = connect(socketFD, address, sizeof (*address));
 
     if (result == 0) {
-        printf("Connected to the server\n");
+        printf("Conectado al servidor\n");
     }
 
-    char* message;
-    message = "GET \\ HTTP/1.1\r\nHost:google.com\r\n\r\n";
-    send(socketFD, message, strlen(message), 0);
+    char *line = NULL;
+    size_t lineSize = 0;
+    printf("Escribir mensaje...\n");
 
-    char buffer[1024];
-    recv(socketFD, buffer, 1024, 0);
+    while (true) {
+        ssize_t charCount = getline(&line, &lineSize, stdin);
 
-    printf("Response was %s\n", buffer);
+        if (charCount > 0) {
+            if (strcmp(line, "exit\n") == 0)
+                break;
+
+            ssize_t amountWasSent = send(socketFD, line, charCount, 0);
+        }
+    }
+
+    close(socketFD);
 
     return 0;
 }

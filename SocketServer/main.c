@@ -46,7 +46,7 @@ void receiveAndPrintIncomingData(int socketFD) {
 
         if (ammountReceived > 0) {
             buffer[ammountReceived] = 0;
-            printf("Respuesta: %s\n", buffer);
+            printf("%s\n", buffer);
 
             sendReceivedMessageToOtherClients(buffer, socketFD);
         }

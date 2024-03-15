@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "socketutil.h"
 
 struct AcceptedSocket {
@@ -9,28 +10,33 @@ struct AcceptedSocket {
     bool acceptedSuccessfully;
 };
 
-struct AcceptedSocket * acceptIncomingConnection(int serverSockerFD);
+struct AcceptedSocket * acceptIncomingConnection(int serverSocketFD);
+void acceptNewConnectionAndReceiveAndPrintItsData(int serverSocketFD);
+void receiveAndPrintIncomingData(int socketFD);
 
-int main() {
+void startAcceptingIncomingConnections(int serverSocketFD);
 
-    int serverSockerFD = createTCPIpv4Socket();
-    // conexiones entrantes
-    struct sockaddr_in *serverAddress = createIPv4Address("", 2000);
+void receiveAndPrintIncomingDataOnSeparateThread(struct AcceptedSocket *pSocket);
 
-    int result = bind(serverSockerFD, serverAddress, sizeof(*serverAddress));
-    if (result == 0)
-        printf("Link correcto con el socket\n");
+void startAcceptingIncomingConnections(int serverSocketFD) {
+    while (true) {
+        struct AcceptedSocket* clientSocket = acceptIncomingConnection(serverSocketFD);
+
+        receiveAndPrintIncomingDataOnSeparateThread(clientSocket);
+    }
+}
+
+void receiveAndPrintIncomingDataOnSeparateThread(struct AcceptedSocket *pSocket) {
+    pthread_t id;
+    pthread_create(&id, NULL, (void *(*)(void *)) receiveAndPrintIncomingData, (void *) pSocket->acceptedSocketFD);
+
+}
 
 
-    // Cuantos se van a conectar
-    int listenResult = listen(serverSockerFD, 10);
-
-
-    struct AcceptedSocket* clientSocket = acceptIncomingConnection(serverSockerFD);
-
+void receiveAndPrintIncomingData(int socketFD) {
     char buffer[1024];
     while (true) {
-        ssize_t ammountReceived = recv(clientSocket->acceptedSocketFD, buffer, 1024, 0);
+        ssize_t ammountReceived = recv(socketFD, buffer, 1024, 0);
 
         if (ammountReceived > 0) {
             buffer[ammountReceived] = 0;
@@ -41,16 +47,13 @@ int main() {
             break;
     }
 
-    close(clientSocket->acceptedSocketFD);
-    shutdown(serverSockerFD, SHUT_RDWR);
-
-    return 0;
+    close(socketFD);
 }
 
-struct AcceptedSocket * acceptIncomingConnection(int serverSockerFD) {
+struct AcceptedSocket * acceptIncomingConnection(int serverSocketFD) {
     struct sockaddr_in clientAddress;
     int clientAddressSize = sizeof (struct sockaddr_in);
-    int clientSocketFD = accept(serverSockerFD, &clientAddress, &clientAddressSize);
+    int clientSocketFD = accept(serverSocketFD, &clientAddress, &clientAddressSize);
 
     struct AcceptedSocket* acceptedSocket = malloc(sizeof (struct AcceptedSocket));
     acceptedSocket->address = clientAddress;
@@ -62,4 +65,24 @@ struct AcceptedSocket * acceptIncomingConnection(int serverSockerFD) {
     }
 
     return acceptedSocket;
+}
+
+int main() {
+
+    int serverSocketFD = createTCPIpv4Socket();
+    // conexiones entrantes
+    struct sockaddr_in *serverAddress = createIPv4Address("", 2000);
+
+    int result = bind(serverSocketFD, serverAddress, sizeof(*serverAddress));
+    if (result == 0)
+        printf("Link correcto con el socket\n");
+
+    // Cuantos se van a conectar
+    int listenResult = listen(serverSocketFD, 10);
+
+    startAcceptingIncomingConnections(serverSocketFD);
+
+    shutdown(serverSocketFD, SHUT_RDWR);
+
+    return 0;
 }

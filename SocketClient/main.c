@@ -1,6 +1,11 @@
 #include <stdbool.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "socketutil.h"
+
+void startListeningAndPrintMessagesOnNewThread(int fd);
+
+void listenAndPrint(int socketFD);
 
 int main() {
     int socketFD = createTCPIpv4Socket(); //file descriptor
@@ -16,6 +21,8 @@ int main() {
     size_t lineSize = 0;
     printf("Escribir mensaje...\n");
 
+    startListeningAndPrintMessagesOnNewThread(socketFD);
+
     while (true) {
         ssize_t charCount = getline(&line, &lineSize, stdin);
 
@@ -30,6 +37,28 @@ int main() {
     close(socketFD);
 
     return 0;
+}
+
+void startListeningAndPrintMessagesOnNewThread(int socketFD) {
+    pthread_t id;
+    pthread_create(&id, NULL, (void *(*)(void *)) listenAndPrint, (void *) socketFD);
+}
+
+void listenAndPrint(int socketFD) {
+    char buffer[1024];
+    while (true) {
+        ssize_t ammountReceived = recv(socketFD, buffer, 1024, 0);
+
+        if (ammountReceived > 0) {
+            buffer[ammountReceived] = 0;
+            printf("Respuesta: %s\n", buffer);
+        }
+
+        if (ammountReceived == 0)
+            break;
+    }
+
+    close(socketFD);
 }
 
 

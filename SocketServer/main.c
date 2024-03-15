@@ -18,9 +18,15 @@ void startAcceptingIncomingConnections(int serverSocketFD);
 
 void receiveAndPrintIncomingDataOnSeparateThread(struct AcceptedSocket *pSocket);
 
+void sendReceivedMessageToOtherClients(char *buffer, int socketFD);
+
+struct AcceptedSocket acceptedSockets[10];
+int acceptedSocketsCount = 0;
+
 void startAcceptingIncomingConnections(int serverSocketFD) {
     while (true) {
         struct AcceptedSocket* clientSocket = acceptIncomingConnection(serverSocketFD);
+        acceptedSockets[acceptedSocketsCount++] = *clientSocket;
 
         receiveAndPrintIncomingDataOnSeparateThread(clientSocket);
     }
@@ -41,6 +47,8 @@ void receiveAndPrintIncomingData(int socketFD) {
         if (ammountReceived > 0) {
             buffer[ammountReceived] = 0;
             printf("Respuesta: %s\n", buffer);
+
+            sendReceivedMessageToOtherClients(buffer, socketFD);
         }
 
         if (ammountReceived == 0)
@@ -48,6 +56,14 @@ void receiveAndPrintIncomingData(int socketFD) {
     }
 
     close(socketFD);
+}
+
+void sendReceivedMessageToOtherClients(char *buffer, int socketFD) {
+    for(int i=0; i < acceptedSocketsCount; i++) {
+        if (acceptedSockets[i].acceptedSocketFD != socketFD ){
+            send(acceptedSockets[i].acceptedSocketFD, buffer, strlen(buffer), 0);
+        }
+    }
 }
 
 struct AcceptedSocket * acceptIncomingConnection(int serverSocketFD) {

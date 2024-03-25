@@ -4,8 +4,7 @@ project(SocketClient C)
 set(CMAKE_C_STANDARD 99)
 
 # Definir la ruta del directorio de SocketUtil
-set(SOCKET_UTIL_DIR "/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Proyecto_No1/SocketUtil")
-
+set(SOCKET_UTIL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../SocketUtil")
 # Asegurarse de que la ruta de SocketUtil exista
 if(NOT EXISTS ${SOCKET_UTIL_DIR})
     message(FATAL_ERROR "La ruta de SocketUtil no es válida: ${SOCKET_UTIL_DIR}")

@@ -9,7 +9,7 @@ void listenAndPrint(int socketFD);
 
 int main() {
     int socketFD = createTCPIpv4Socket(); //file descriptor
-    struct sockaddr_in *address = createIPv4Address("127.0.0.1", 2000);
+    struct sockaddr_in *address = createIPv4Address("20.55.64.147", 2000);
 
     int result = connect(socketFD, address, sizeof (*address));
 

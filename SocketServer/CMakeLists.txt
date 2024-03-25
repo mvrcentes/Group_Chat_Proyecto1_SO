@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.23)
-project(SocketClient C)
+project(SocketServer C)
 
 set(CMAKE_C_STANDARD 99)
 
-# Definir la ruta del directorio de SocketUtil
-set(SOCKET_UTIL_DIR "/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Proyecto_No1/SocketUtil")
+set(SOCKET_UTIL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../SocketUtil")
+
+# Mostrar la ruta del directorio de SocketUtil
+message(STATUS "La ruta del directorio de SocketUtil es: ${SOCKET_UTIL_DIR}")
+
 
 # Asegurarse de que la ruta de SocketUtil exista
 if(NOT EXISTS ${SOCKET_UTIL_DIR})

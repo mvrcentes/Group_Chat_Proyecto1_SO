@@ -26,19 +26,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 34,
+				"line" : 37,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 37,
+				"line" : 40,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 15,
+				"line" : 18,
 				"parent" : 0
 			}
 		]
@@ -56,7 +56,7 @@
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Proyecto_No1/SocketUtil"
+					"path" : "/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketServer/../SocketUtil"
 				}
 			],
 			"language" : "C",

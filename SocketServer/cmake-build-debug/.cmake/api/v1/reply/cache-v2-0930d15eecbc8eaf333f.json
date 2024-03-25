@@ -723,7 +723,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "SocketClient"
+			"value" : "SocketServer"
 		},
 		{
 			"name" : "CMAKE_RANLIB",

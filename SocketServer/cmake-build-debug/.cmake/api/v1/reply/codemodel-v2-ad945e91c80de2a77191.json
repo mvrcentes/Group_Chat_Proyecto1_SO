@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "SocketClient",
+					"name" : "SocketServer",
 					"targetIndexes" : 
 					[
 						0
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SocketServer::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SocketServer-Debug-07b4796617b2020b0e37.json",
+					"jsonFile" : "target-SocketServer-Debug-211012252495a6f6dba9.json",
 					"name" : "SocketServer",
 					"projectIndex" : 0
 				}

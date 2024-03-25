@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: SocketClient
+# Project: SocketServer
 # Configurations: Debug
 # =============================================================================
 
@@ -52,7 +52,7 @@ build cmake_object_order_depends_target_SocketServer: phony || CMakeFiles/Socket
 build CMakeFiles/SocketServer.dir/main.c.o: C_COMPILER__SocketServer_unscanned_Debug /Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketServer/main.c || cmake_object_order_depends_target_SocketServer
   DEP_FILE = CMakeFiles/SocketServer.dir/main.c.o.d
   FLAGS = -g -std=gnu99 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fcolor-diagnostics
-  INCLUDES = -I/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Proyecto_No1/SocketUtil
+  INCLUDES = -I/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketServer/../SocketUtil
   OBJECT_DIR = CMakeFiles/SocketServer.dir
   OBJECT_FILE_DIR = CMakeFiles/SocketServer.dir
 

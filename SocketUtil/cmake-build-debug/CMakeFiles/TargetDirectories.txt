@@ -1,3 +1,0 @@
-/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketUtil/cmake-build-debug/CMakeFiles/SocketUtil.dir
-/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketUtil/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/mvrcentes/Library/CloudStorage/OneDrive-UVG/Documentos/Semestre_7/Sistemas_operativos/Group_Chat_Proyecto1_SO/SocketUtil/cmake-build-debug/CMakeFiles/rebuild_cache.dir

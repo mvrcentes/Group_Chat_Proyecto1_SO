@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.23)
-project(SocketClient C)
+project(SocketClient CXX)
 
 set(CMAKE_C_STANDARD 99)
 
@@ -30,7 +30,7 @@ if(NOT EXISTS ${TheHeaderFile})
 endif()
 
 # Añadir el ejecutable y especificar el archivo fuente
-add_executable(SocketClient main.c)
+add_executable(SocketClient client.cpp)
 
 # Enlazar la biblioteca SocketUtil
 target_link_libraries(SocketClient ${TheLibrary})

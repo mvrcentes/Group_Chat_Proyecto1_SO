@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
     string my_ip;
     get_my_ip(&my_ip);
 
+    cout << "\nUsername: " << username << endl;
     cout << "\nMY IP: " << my_ip << endl;
 
     if(host == NULL) {

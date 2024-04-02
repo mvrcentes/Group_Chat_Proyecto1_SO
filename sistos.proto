@@ -54,7 +54,7 @@ message MessageCommunication {
 // option 3: Cambio de Estado
 // option 4: Mensajes
 // option 5: Informacion de un usuario en particular
-(SON LAS MISMAS OPCIONES QUE LO QUE RESPONDERA EL SERVER PARA ESTAR EN EL MISMO FORMATO)
+// (SON LAS MISMAS OPCIONES QUE LO QUE RESPONDERA EL SERVER PARA ESTAR EN EL MISMO FORMATO)
 // PARA LA INFO DE TODOS LOS USUARIOS CONECTADOS MANDAR UN UserRequest con everyone
 // PARA LA INFO DE SOLO 1 USUARIO MANDAR UN UserRequest con el username
 message ClientPetition {
@@ -79,9 +79,9 @@ message ClientPetition {
 // codigo 500: Fallo
 // EN RESPUESTA A UNA SOLICITUD DEL CLIENTE POR EJEMPLO: REGISTRO DE USUARIOS
 // EL SERVER RETORNA:
-OPCION, 
-CODIGO 
-MENSAJE DEL SERVIDOR
+// OPCION, 
+// CODIGO 
+// MENSAJE DEL SERVIDOR
 // PARA SABER SI EL REQUEST FUE SUCCESS O ALGO MURIO EN EL SERVER 
 message ServerResponse {
     optional int32 option = 1;

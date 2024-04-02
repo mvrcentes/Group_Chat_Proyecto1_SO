@@ -45,8 +45,16 @@ int main(int argc, char *argv[]) {
     string my_ip;
     get_my_ip(&my_ip);
 
-    cout << "\nUsername: " << username << endl;
+    cout << "****************************************" << endl;
+    cout << "*                                      *" << endl;
+    cout << "*            Bienvenido a              *" << endl;
+    cout << "*               SisChat                *" << endl;
+    cout << "*                                      *" << endl;
+    cout << "****************************************" << endl;
+
+    cout << "\nBienvenido " << username << endl;
     cout << "\nMY IP: " << my_ip << endl;
+
 
     if(host == NULL) {
         cout << "\nNo se pudo obtener el host" << stderr << endl;
@@ -69,12 +77,19 @@ int main(int argc, char *argv[]) {
         chat::ClientPetition client_petition;
         string petition;
 
-        cout << "\n1. Registro de usuario" << endl
-             << "2. Lista de usuarios conectados" << endl
-             << "6. Ayuda" << endl
-             << "7. Salir\n" << endl;
-        cout << "Ingresa una opción" << endl;
+        cout << "*****************************************" << endl;
+        cout << "*                                       *" << endl;
+        cout << "*             Menú Principal            *" << endl;
+        cout << "*                                       *" << endl;
+        cout << "*****************************************" << endl;
+        cout << "* 1. Registro de usuario                *" << endl;
+        cout << "* 2. Lista de usuarios conectados       *" << endl;
+        cout << "* 6. Ayuda                              *" << endl;
+        cout << "* 7. Salir                              *" << endl;
+        cout << "*****************************************" << endl;
+        cout << "Ingresa una opción:" << endl;
         cin >> choice;
+
 
         client_petition.set_option(choice);
 
@@ -102,12 +117,23 @@ int main(int argc, char *argv[]) {
                 // ==================================
                 break;
             case 6: // Ayuda
-                cout << "Lo primero que tienes que hacer es registrarte, para eso presiona 1." << endl
-                     << "Si no te registras puedes ver los usuarios conectados, presionando 2, o bien salir del chat presionando 7." << endl
-                     << "Una vez registrado puedes hacer uso de todas las funcionalidades del chat" << endl
-                     << "Si quieres cambiar tu estado, que por defecto es 'Activo' debes presionar 3 y elegir una opcion." << endl
-                     << "Si quieres saber la información de un usuario conectado ingresa 5 y luego el nombre de usuario que quieres obtener información o bien 'everyone' para saber la información de todos." << endl
-                     << "por último, si quieres chatear con alguien, ingresa la opción 4, escribe el nombre del destinatario o bien 'everyone' para enviar un mensaje a todos los usuarios conectados" << endl;
+                cout << "*******************************************************" << endl;
+                cout << "*                  Instrucciones                      *" << endl;
+                cout << "*******************************************************" << endl;
+                cout << "* 1. Registro: Presiona '1' para registrarte.         *" << endl;
+                cout << "* 2. Usuarios conectados: Sin registro, presiona '2'  *" << endl;
+                cout << "*    para ver los usuarios conectados, o '7' para     *" << endl;
+                cout << "*    salir del chat.                                  *" << endl;
+                cout << "* 3. Cambio de estado: Una vez registrado, presiona   *" << endl;
+                cout << "*    '3' y elige una opción para cambiar tu estado    *" << endl;
+                cout << "*    que por defecto es 'Activo'.                     *" << endl;
+                cout << "* 4. Chatear: Ingresa '4', escribe el nombre del      *" << endl;
+                cout << "*    destinatario o 'everyone' para enviar un mensaje *" << endl;
+                cout << "*    a todos los usuarios conectados.                 *" << endl;
+                cout << "* 5. Información de usuario: Ingresa '5' y luego el   *" << endl;
+                cout << "*    nombre de usuario para obtener información, o    *" << endl;
+                cout << "*    'everyone' para la información de todos.         *" << endl;
+                cout << "*******************************************************" << endl;
                 break;
             case 7: // Salir
                 // ==================================
@@ -200,7 +226,7 @@ int main(int argc, char *argv[]) {
                 cout << "\nDestinatario: " << endl;
                 cin >> receiver;
                 client_petition.mutable_messagecommunication() -> set_recipient(receiver);
-
+                
                 string message;
                 cout << "\nMensaje: ";
                 getline(cin >> ws, message);
@@ -209,9 +235,18 @@ int main(int argc, char *argv[]) {
                 // Send petition
                 client_petition.SerializeToString(&petition);
                 strcpy(client_buffer, petition.c_str());
-                if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
-                    cout << "\nLa conexion fallo, vuelva a intentar" << endl;
+                while (message != "exit") {
+                    if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
+                        cout << "\nLa conexion fallo, vuelva a intentar" << endl;
+                    }
+                    getline(cin >> ws, message);
+                    client_petition.mutable_messagecommunication() -> set_message(message);
+                    client_petition.SerializeToString(&petition);
+                    strcpy(client_buffer, petition.c_str());
                 }
+                // if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
+                //     cout << "\nLa conexion fallo, vuelva a intentar" << endl;
+                // }
                 // ==================================
                 break;
             }
@@ -237,12 +272,23 @@ int main(int argc, char *argv[]) {
                 // ==================================
                 // Ayuda
                 // ==================================
-                cout << "Lo primero que tienes que hacer es registrarte, para eso presiona 1." << endl
-                     << "Si no te registras puedes ver los usuarios conectados, presionando 2, o bien salir del chat presionando 7." << endl
-                     << "Una vez registrado puedes hacer uso de todas las funcionalidades del chat" << endl
-                     << "Si quieres cambiar tu estado, que por defecto es 'Activo' debes presionar 3 y elegir una opcion." << endl
-                     << "Si quieres saber la información de un usuario conectado ingresa 5 y luego el nombre de usuario que quieres obtener información o bien 'everyone' para saber la información de todos." << endl
-                     << "por último, si quieres chatear con alguien, ingresa la opción 4, escribe el nombre del destinatario o bien 'everyone' para enviar un mensaje a todos los usuarios conectados" << endl;
+                cout << "*******************************************************" << endl;
+                cout << "*                  Instrucciones                      *" << endl;
+                cout << "*******************************************************" << endl;
+                cout << "* 1. Registro: Presiona '1' para registrarte.         *" << endl;
+                cout << "* 2. Usuarios conectados: Sin registro, presiona '2'  *" << endl;
+                cout << "*    para ver los usuarios conectados, o '7' para     *" << endl;
+                cout << "*    salir del chat.                                  *" << endl;
+                cout << "* 3. Cambio de estado: Una vez registrado, presiona   *" << endl;
+                cout << "*    '3' y elige una opción para cambiar tu estado    *" << endl;
+                cout << "*    que por defecto es 'Activo'.                     *" << endl;
+                cout << "* 4. Chatear: Ingresa '4', escribe el nombre del      *" << endl;
+                cout << "*    destinatario o 'everyone' para enviar un mensaje *" << endl;
+                cout << "*    a todos los usuarios conectados.                 *" << endl;
+                cout << "* 5. Información de usuario: Ingresa '5' y luego el   *" << endl;
+                cout << "*    nombre de usuario para obtener información, o    *" << endl;
+                cout << "*    'everyone' para la información de todos.         *" << endl;
+                cout << "*******************************************************" << endl;
                 break;
             case 7:
                 // ==================================

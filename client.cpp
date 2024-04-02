@@ -161,13 +161,16 @@ int main(int argc, char *argv[]) {
         string petition;
 
         if (choice != 4) {
-            cout << "\n" << endl
-                << "2. Lista de usuarios conectados" << endl
-                << "3. Cambiar estado" << endl
-                << "4. Chat" << endl
-                << "5. Info de usuario" << endl
-                << "6. Ayuda" << endl
-                << "7. Salir\n" << endl;
+            cout << "*****************************************" << endl;
+            cout << "*             Opciones de Menú           *" << endl;
+            cout << "*****************************************" << endl;
+            cout << "* 2. Lista de usuarios conectados        *" << endl;
+            cout << "* 3. Cambiar estado                      *" << endl;
+            cout << "* 4. Chat                                *" << endl;
+            cout << "* 5. Info de usuario                     *" << endl;
+            cout << "* 6. Ayuda                               *" << endl;
+            cout << "* 7. Salir                               *" << endl;
+            cout << "*****************************************" << endl;
         }
         cout << "\nIngresa una opción:" << endl;
         cin >> choice;
@@ -189,10 +192,15 @@ int main(int argc, char *argv[]) {
                 break;
             case 3: { // Cambiar estado
                 int status_choice;
-                cout << "\n1. Activo" << endl
-                    << "2. Inactivo" << endl
-                    << "3. Ocupado\n" << endl;
-                cout << "Ingresa una opción" << endl;
+                cout << "*****************************************" << endl;
+                cout << "*            Estados Disponibles        *" << endl;
+                cout << "*****************************************" << endl;
+                cout << "* 1. Activo                             *" << endl;
+                cout << "* 2. Inactivo                           *" << endl;
+                cout << "* 3. Ocupado                            *" << endl;
+                cout << "*****************************************" << endl;
+                cout << "Ingresa una opción:" << endl;
+
                 cin >> status_choice;
 
                 string status;
@@ -226,7 +234,7 @@ int main(int argc, char *argv[]) {
                 cout << "\nDestinatario: " << endl;
                 cin >> receiver;
                 client_petition.mutable_messagecommunication() -> set_recipient(receiver);
-                
+
                 string message;
                 cout << "\nMensaje: ";
                 getline(cin >> ws, message);
@@ -235,18 +243,9 @@ int main(int argc, char *argv[]) {
                 // Send petition
                 client_petition.SerializeToString(&petition);
                 strcpy(client_buffer, petition.c_str());
-                while (message != "exit") {
-                    if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
-                        cout << "\nLa conexion fallo, vuelva a intentar" << endl;
-                    }
-                    getline(cin >> ws, message);
-                    client_petition.mutable_messagecommunication() -> set_message(message);
-                    client_petition.SerializeToString(&petition);
-                    strcpy(client_buffer, petition.c_str());
+                if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
+                    cout << "\nLa conexion fallo, vuelva a intentar" << endl;
                 }
-                // if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
-                //     cout << "\nLa conexion fallo, vuelva a intentar" << endl;
-                // }
                 // ==================================
                 break;
             }
@@ -434,7 +433,7 @@ void interrupt_handler(int signal_unused) {
     if(write(socket_fd, client_buffer, MAX_CLIENT_BUFFER - 1) == -1) {
         cout << "\nLa conexion fallo, vuelva a intentar" << endl;
     } else {
-        cout << "\nAdios :)" << endl;
+        cout << "\nGracias por usar el servicio de SisChat hasta pronto :)" << endl;
         close(socket_fd);
         google::protobuf::ShutdownProtobufLibrary();
         exit(1);

@@ -19,6 +19,10 @@
 
 Compila y ejecuta el servidor SisChat siguiendo estos pasos:
 
+#### Requisitos 
+
+tener protoc versión 3.15 
+
 1. **Compilación del Servidor**
 
     Utiliza el siguiente comando para compilar el servidor:

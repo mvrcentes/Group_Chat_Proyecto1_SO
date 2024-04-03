@@ -121,7 +121,6 @@ void *new_clients_handler(void *data) {
 
         if(new_client_socket_fd > 0) {
             cout << "\nSe ha conectado un nuevo cliente: " << new_client_socket_fd << endl;
-
             // Obtener lock en la lista de clientes
             pthread_mutex_lock(chatrooms_data -> client_list_mutex);
 
@@ -327,6 +326,8 @@ void *client_listener(void *client_data) {
                                 server_chat_response.SerializeToString(&response_chat);
                                 strcpy(server_chat_buffer, response_chat.c_str());
                                 write(client_i.socket_fd, server_chat_buffer, MAX_CLIENT_BUFFER - 1);
+                                // print message
+                                cout << "\n" << sender << " -> " << receiver << ": " << message << endl;
                             }
                         }
                     }
